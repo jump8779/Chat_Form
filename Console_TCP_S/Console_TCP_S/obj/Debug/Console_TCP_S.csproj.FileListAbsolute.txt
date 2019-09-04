@@ -1,0 +1,7 @@
+D:\Git_Project\Chat_Form\Console_TCP_S\Console_TCP_S\bin\Debug\Console_TCP_S.exe.config
+D:\Git_Project\Chat_Form\Console_TCP_S\Console_TCP_S\bin\Debug\Console_TCP_S.exe
+D:\Git_Project\Chat_Form\Console_TCP_S\Console_TCP_S\bin\Debug\Console_TCP_S.pdb
+D:\Git_Project\Chat_Form\Console_TCP_S\Console_TCP_S\obj\Debug\Console_TCP_S.csprojAssemblyReference.cache
+D:\Git_Project\Chat_Form\Console_TCP_S\Console_TCP_S\obj\Debug\Console_TCP_S.csproj.CoreCompileInputs.cache
+D:\Git_Project\Chat_Form\Console_TCP_S\Console_TCP_S\obj\Debug\Console_TCP_S.exe
+D:\Git_Project\Chat_Form\Console_TCP_S\Console_TCP_S\obj\Debug\Console_TCP_S.pdb
