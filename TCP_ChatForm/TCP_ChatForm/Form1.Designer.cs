@@ -45,7 +45,8 @@
             this.chatlog_tbox.ReadOnly = true;
             this.chatlog_tbox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.chatlog_tbox.Size = new System.Drawing.Size(662, 440);
-            this.chatlog_tbox.TabIndex = 0;
+            this.chatlog_tbox.TabIndex = 2;
+            this.chatlog_tbox.TabStop = false;
             // 
             // msg_tbox
             // 
@@ -53,16 +54,17 @@
             this.msg_tbox.Location = new System.Drawing.Point(12, 476);
             this.msg_tbox.Name = "msg_tbox";
             this.msg_tbox.Size = new System.Drawing.Size(587, 29);
-            this.msg_tbox.TabIndex = 1;
+            this.msg_tbox.TabIndex = 0;
             // 
             // send_bt
             // 
             this.send_bt.Location = new System.Drawing.Point(606, 476);
             this.send_bt.Name = "send_bt";
             this.send_bt.Size = new System.Drawing.Size(69, 29);
-            this.send_bt.TabIndex = 2;
+            this.send_bt.TabIndex = 1;
             this.send_bt.Text = "전송";
             this.send_bt.UseVisualStyleBackColor = true;
+            this.send_bt.Click += new System.EventHandler(this.Send_bt_Click);
             // 
             // server_bt
             // 
@@ -75,6 +77,7 @@
             this.server_bt.TabIndex = 3;
             this.server_bt.Text = "서버 시작";
             this.server_bt.UseVisualStyleBackColor = true;
+            this.server_bt.Click += new System.EventHandler(this.Server_bt_Click);
             // 
             // Server_Form
             // 
@@ -87,6 +90,7 @@
             this.Controls.Add(this.chatlog_tbox);
             this.Name = "Server_Form";
             this.Text = "서버";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Server_Form_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 
