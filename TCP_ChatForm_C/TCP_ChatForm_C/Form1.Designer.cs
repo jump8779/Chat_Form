@@ -63,6 +63,7 @@
             this.send_bt.TabIndex = 2;
             this.send_bt.Text = "전송";
             this.send_bt.UseVisualStyleBackColor = true;
+            this.send_bt.Click += new System.EventHandler(this.Send_bt_Click);
             // 
             // connect_bt
             // 
@@ -74,6 +75,7 @@
             this.connect_bt.TabIndex = 3;
             this.connect_bt.Text = "서버 연결";
             this.connect_bt.UseVisualStyleBackColor = true;
+            this.connect_bt.Click += new System.EventHandler(this.Connect_bt_Click);
             // 
             // Client_Form
             // 
@@ -86,6 +88,7 @@
             this.Controls.Add(this.chatlog_tbox);
             this.Name = "Client_Form";
             this.Text = "클라이언트";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Client_Form_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 
