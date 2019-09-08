@@ -75,11 +75,9 @@ namespace TCP_ChatForm_C
                     Temp = Encoding.Default.GetString(Buffer);
                     msg = Temp.Split(c);
 
-                    switch (Convert.ChangeType(msg[0],Protocol.Message.GetType()))
+                    if(msg[0] == Protocol.Message.ToString())
                     {
-                        case Protocol.Message:
-                            chatlog_tbox.Text += msg[1] + "\n";
-                            break;
+                        chatlog_tbox.Text += msg[1] + "\r\n";
                     }
                     Array.Clear(Buffer, 0, Buffer.Length);
                 }
@@ -95,9 +93,9 @@ namespace TCP_ChatForm_C
         {
             if(msg_tbox.Text != "")
             {
-                String msg = Protocol.Message + "|[Client]" + msg_tbox.Text + "|END";
+                String msg = Protocol.Message + "|[client]" + msg_tbox.Text + "|END";
                 SendMsg(msg);
-                msg = "[Client]" + msg_tbox.Text + "\n";
+                msg = "[client]" + msg_tbox.Text + "\r\n";
                 chatlog_tbox.Text += msg;
                 msg_tbox.Text = "";
             }
@@ -111,7 +109,7 @@ namespace TCP_ChatForm_C
                 {
                     cSocket = new TcpClient();
                     cSocket.Connect("localhost", 8001);
-                    chatlog_tbox.Text += "서버 연결에 성공했습니다.\n";
+                    chatlog_tbox.Text += "서버 연결에 성공했습니다.\r\n";
                     IsConnected = true;
                 }
                 catch

@@ -19,6 +19,7 @@ namespace TCP_ChatForm
         public Server_Form()
         {
             InitializeComponent();
+            CheckForIllegalCrossThreadCalls = false; // 크로스 스레드 에러 무시
         }
         
         public enum Protocol
@@ -41,7 +42,7 @@ namespace TCP_ChatForm
             {
                 sListen = new TcpListener(8001);
                 sListen.Start();
-                chatlog_tbox.Text = "서버가 시작했습니다.";
+                chatlog_tbox.Text = "서버가 시작했습니다.\r\n";
                 bService = true;
             }
             catch
@@ -65,6 +66,7 @@ namespace TCP_ChatForm
         // 클라이언트로부터 전송된 데이터 수신
         private void Receive()
         {
+            Protocol P;
             Byte[] Buffer = new Byte[1024];
             String Temp;
             String[] msg;
@@ -77,24 +79,25 @@ namespace TCP_ChatForm
                     Temp = Encoding.Default.GetString(Buffer);
                     msg = Temp.Split(c);
 
-                    switch (Convert.ChangeType(msg[0], Protocol.Connecte.GetType()))
+                    P = (Protocol)Enum.Parse(typeof(Protocol), msg[0].ToString());
+                    switch (P)
                     {
                         case Protocol.Connecte: // 연결 요청
-                            Temp = (msg[1].Trim() + "님이 접속했습니다.\n");
-                            chatlog_tbox.Text += "Temp";
+                            Temp = (msg[1].Trim() + "님이 접속했습니다.\r\n");
+                            chatlog_tbox.Text += Temp;
                             break;
                         case Protocol.Message: // 일반 메시지 수신
-                            chatlog_tbox.Text += msg[1].ToString() + "\n";
+                            chatlog_tbox.Text += msg[1].ToString() + "\r\n";
                             break;
                         case Protocol.DisConnecte: // 연결 해제 요청
-                            Temp = msg[1] + "님이 접속 해제했습니다.\n";
+                            Temp = msg[1] + "님이 접속 해제했습니다.\r\n";
                             chatlog_tbox.Text += Temp;
                             break;
                     }
                     Array.Clear(Buffer, 0, Buffer.Length);
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 MessageBox.Show("데이터 수신 중 오류");
             }
@@ -109,7 +112,7 @@ namespace TCP_ChatForm
                 ServerTh.Abort();
                 bService = false;
             }
-            chatlog_tbox.Text += "서버가 중지되었습니다.";
+            chatlog_tbox.Text += "서버가 중지되었습니다.\r\n";
         }
 
         // 서버 소켓 연결 끊기
@@ -156,7 +159,7 @@ namespace TCP_ChatForm
             {
                 String msg = Protocol.Message + "|[server]" + msg_tbox.Text + "|END";
                 SendMsg(msg);
-                msg = "[server]" + msg_tbox.Text + "\n";
+                msg = "[server]" + msg_tbox.Text + "\r\n";
                 chatlog_tbox.Text += msg;
                 msg_tbox.Text = "";
             }
