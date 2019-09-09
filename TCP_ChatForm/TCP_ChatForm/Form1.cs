@@ -92,10 +92,15 @@ namespace TCP_ChatForm
                         case Protocol.DisConnecte: // 연결 해제 요청
                             Temp = msg[1] + "님이 접속 해제했습니다.\r\n";
                             chatlog_tbox.Text += Temp;
+                            Disconnect();
                             break;
                     }
                     Array.Clear(Buffer, 0, Buffer.Length);
                 }
+            }
+            catch (ThreadAbortException)
+            {
+                return;
             }
             catch
             {
@@ -149,6 +154,7 @@ namespace TCP_ChatForm
             else
             {
                 ServerStop();
+                Disconnect();
                 server_bt.Text = "서버 시작";
             }
         }

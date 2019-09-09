@@ -19,6 +19,7 @@ namespace TCP_ChatForm_C
         public Client_Form()
         {
             InitializeComponent();
+            CheckForIllegalCrossThreadCalls = false; // 디버깅 시 크로스 스레드 에러 무시
         }
 
         private enum Protocol
@@ -81,6 +82,10 @@ namespace TCP_ChatForm_C
                     }
                     Array.Clear(Buffer, 0, Buffer.Length);
                 }
+            }
+            catch(ThreadAbortException)
+            {
+                return;
             }
             catch
             {
