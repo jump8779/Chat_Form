@@ -32,6 +32,8 @@
             this.msg_tbox = new System.Windows.Forms.TextBox();
             this.send_bt = new System.Windows.Forms.Button();
             this.connect_bt = new System.Windows.Forms.Button();
+            this.filesend_bt = new System.Windows.Forms.Button();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.SuspendLayout();
             // 
             // chatlog_tbox
@@ -69,7 +71,7 @@
             // 
             this.connect_bt.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.connect_bt.Location = new System.Drawing.Point(339, 517);
+            this.connect_bt.Location = new System.Drawing.Point(267, 517);
             this.connect_bt.Name = "connect_bt";
             this.connect_bt.Size = new System.Drawing.Size(118, 48);
             this.connect_bt.TabIndex = 3;
@@ -77,11 +79,26 @@
             this.connect_bt.UseVisualStyleBackColor = true;
             this.connect_bt.Click += new System.EventHandler(this.Connect_bt_Click);
             // 
+            // filesend_bt
+            // 
+            this.filesend_bt.Location = new System.Drawing.Point(422, 517);
+            this.filesend_bt.Name = "filesend_bt";
+            this.filesend_bt.Size = new System.Drawing.Size(114, 48);
+            this.filesend_bt.TabIndex = 4;
+            this.filesend_bt.Text = "파일 전송";
+            this.filesend_bt.UseVisualStyleBackColor = true;
+            this.filesend_bt.Click += new System.EventHandler(this.Filesend_bt_Click);
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            // 
             // Client_Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 577);
+            this.Controls.Add(this.filesend_bt);
             this.Controls.Add(this.connect_bt);
             this.Controls.Add(this.send_bt);
             this.Controls.Add(this.msg_tbox);
@@ -100,6 +117,8 @@
         private System.Windows.Forms.TextBox msg_tbox;
         private System.Windows.Forms.Button send_bt;
         private System.Windows.Forms.Button connect_bt;
+        private System.Windows.Forms.Button filesend_bt;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
     }
 }
 

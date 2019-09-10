@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using System.IO;
 
 namespace TCP_ChatForm_C
 {
@@ -26,12 +27,14 @@ namespace TCP_ChatForm_C
         {
             Connecte = 1000,
             DisConnecte = 2000,
-            Message =3000
+            Message = 3000,
+            FileSend = 4000
         }
 
         private TcpClient cSocket;
         private NetworkStream cNts;
         private Boolean IsConnected = false;
+        private Boolean SendErr = false;
         private Thread ReadTh;
 
         private void SendMsg(String msg)
@@ -41,10 +44,12 @@ namespace TCP_ChatForm_C
                 Byte[] byteSend = Encoding.Default.GetBytes(msg.ToCharArray());
                 cNts.Write(byteSend, 0, byteSend.Length);
                 cNts.Flush();
+                SendErr = false;
             }
             catch
             {
                 MessageBox.Show("데이터 전송 실패");
+                SendErr = true;
             }
         }
 
@@ -52,7 +57,7 @@ namespace TCP_ChatForm_C
         {
             if (IsConnected == false) return;
             SendMsg(Protocol.DisConnecte + "|홍길동|END");
-            MessageBox.Show("서버 연결 해제");
+            chatlog_tbox.Text += "서버 연결 해제\r\n";
             IsConnected = false;
 
             cNts.Close();
@@ -96,12 +101,16 @@ namespace TCP_ChatForm_C
 
         private void Send_bt_Click(object sender, EventArgs e)
         {
+            String msg;
             if(msg_tbox.Text != "")
             {
-                String msg = Protocol.Message + "|[client]" + msg_tbox.Text + "|END";
+                msg = Protocol.Message + "|[client]" + msg_tbox.Text + "|END";
                 SendMsg(msg);
-                msg = "[client]" + msg_tbox.Text + "\r\n";
-                chatlog_tbox.Text += msg;
+                if (!SendErr)
+                {
+                    msg = "[client]" + msg_tbox.Text + "\r\n";
+                    chatlog_tbox.Text += msg;
+                }
                 msg_tbox.Text = "";
             }
         }
@@ -137,6 +146,35 @@ namespace TCP_ChatForm_C
         private void Client_Form_FormClosing(object sender, FormClosingEventArgs e)
         {
             Disconnect();
+        }
+
+        private void Filesend_bt_Click(object sender, EventArgs e)
+        {
+            FileStream fS;
+            DialogResult diaR = openFileDialog1.ShowDialog();
+            if (diaR == DialogResult.OK)
+            {
+                String s = openFileDialog1.FileName; // 전체 경로
+                // FileStream(파일 전체 경로, 파일 모드, 파일 권한 모드)
+                fS = new FileStream(s, FileMode.Open, FileAccess.Read);
+                int filesize = (int)fS.Length;
+                Byte[] buff = new Byte[filesize];
+                // 2진 데이터를 읽기 위한 클래스 생성
+                BinaryReader bR = new BinaryReader(fS);
+                bR.Read(buff, 0, filesize);
+                String p = Protocol.FileSend + "|" + openFileDialog1.SafeFileName + "|"; // 프로토콜 | 파일 이름 |
+                Byte[] byteSend;
+                byteSend = Encoding.Default.GetBytes(p);
+                Array.Resize(ref byteSend, p.Length + buff.Length);
+                Array.Copy(buff, 0, byteSend, p.Length, buff.Length);
+
+                cNts.Write(byteSend, 0, byteSend.Length);
+                cNts.Flush();
+
+                bR.Close();
+                fS.Close();
+            }
+            chatlog_tbox.Text += "파일 전송 완료\r\n";
         }
     }
 }
